@@ -1,0 +1,54 @@
+<h2>System Architecture</h2>
+<p class="subtitle">How all the pieces connect</p>
+
+<div class="section">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1rem">
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem">
+      <div class="label">Browser / User</div>
+      <h3 style="margin:0.5rem 0">Next.js Frontend</h3>
+      <ul style="margin:0;padding-left:1.2rem;font-size:0.9rem">
+        <li>Homepage (search bar)</li>
+        <li>Search results + filters</li>
+        <li>Book detail page</li>
+        <li>Category landing pages</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--text-muted)">Deployed on Vercel</div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem">
+      <div class="label">Server (API Routes)</div>
+      <h3 style="margin:0.5rem 0">Next.js Backend</h3>
+      <ul style="margin:0;padding-left:1.2rem;font-size:0.9rem">
+        <li>Proxy Google Books API</li>
+        <li>Build affiliate links</li>
+        <li>ISR page regeneration</li>
+        <li>Sitemap generation</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--text-muted)">API key stays hidden</div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem">
+      <div class="label">External APIs</div>
+      <h3 style="margin:0.5rem 0">Data Sources</h3>
+      <ul style="margin:0;padding-left:1.2rem;font-size:0.9rem">
+        <li>Google Books API (free)</li>
+        <li>amazon.com.br (affiliate search URLs)</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--text-muted)">No paid APIs needed for MVP</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <h3>Data Flow</h3>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:0.9rem;line-height:2">
+    User searches → <strong>API Route</strong> queries Google Books → results returned with filters applied<br>
+    User clicks book → <strong>Book Detail Page</strong> loads (ISR cached) with cover, description, similar books<br>
+    User clicks "Comprar" → redirected to <strong>amazon.com.br</strong> search with affiliate tag<br>
+    Google crawls → hits pre-built <strong>category + book pages</strong> with full meta tags &amp; schema markup
+  </div>
+</div>
+
+<p class="subtitle">Does this architecture look right? Let me know in the terminal.</p>

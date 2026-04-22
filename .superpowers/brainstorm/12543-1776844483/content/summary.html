@@ -1,0 +1,69 @@
+<h2>Design Summary — Ache um Livro</h2>
+<p class="subtitle">Tudo que vamos construir</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem">
+    <div class="label">Stack</div>
+    <ul style="font-size:0.85rem;line-height:2;margin:0.5rem 0;padding-left:1.2rem">
+      <li>Next.js 14 (App Router)</li>
+      <li>TypeScript</li>
+      <li>Tailwind CSS</li>
+      <li>Vercel (hospedagem gratuita)</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem">
+    <div class="label">APIs &amp; Dados</div>
+    <ul style="font-size:0.85rem;line-height:2;margin:0.5rem 0;padding-left:1.2rem">
+      <li>Google Books API (gratuita)</li>
+      <li>Amazon Associados BR (<code>rondinellyc09-20</code>)</li>
+      <li>Sem banco de dados — ISR como cache</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem">
+    <div class="label">Páginas</div>
+    <ul style="font-size:0.85rem;line-height:2;margin:0.5rem 0;padding-left:1.2rem">
+      <li>/ — Homepage com busca</li>
+      <li>/busca — Resultados + filtros</li>
+      <li>/categoria/[genero] — ISR, indexável</li>
+      <li>/livro/[id]/[slug] — ISR, indexável</li>
+      <li>/sitemap.xml + /robots.txt</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem">
+    <div class="label">SEO</div>
+    <ul style="font-size:0.85rem;line-height:2;margin:0.5rem 0;padding-left:1.2rem">
+      <li>Título e descrição em português</li>
+      <li>Schema.org Book markup</li>
+      <li>og:image com capa do livro</li>
+      <li>Sitemap automático</li>
+      <li>URLs amigáveis com slug</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem">
+    <div class="label">Filtros de Busca</div>
+    <ul style="font-size:0.85rem;line-height:2;margin:0.5rem 0;padding-left:1.2rem">
+      <li>Gênero (suspense, romance, etc.)</li>
+      <li>Nº de páginas (curto / médio / longo)</li>
+      <li>Origem (nacional 🇧🇷 / internacional)</li>
+      <li>Disponível em português</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem">
+    <div class="label">Funcionalidades</div>
+    <ul style="font-size:0.85rem;line-height:2;margin:0.5rem 0;padding-left:1.2rem">
+      <li>Busca via Google Books API</li>
+      <li>Livros parecidos (Google Books recommendations)</li>
+      <li>Link afiliado amazon.com.br por livro</li>
+      <li>UI 100% em português</li>
+    </ul>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:1.5rem">Aprova o design completo? Diga "sim" no terminal para escrevermos o spec.</p>

@@ -1,0 +1,99 @@
+<h2>UI &amp; Core Features</h2>
+<p class="subtitle">Ache um Livro — o que os usuários veem e usam</p>
+
+<div class="section">
+  <h3>Homepage</h3>
+  <div class="mockup">
+    <div class="mockup-header">/ — Página Inicial</div>
+    <div class="mockup-body">
+      <div class="mock-nav">📚 Ache um Livro &nbsp;&nbsp;|&nbsp;&nbsp; Categorias &nbsp;&nbsp;|&nbsp;&nbsp; Mais Lidos</div>
+      <div style="text-align:center;padding:2rem 1rem">
+        <h3 style="margin-bottom:0.5rem">Qual livro você vai ler hoje?</h3>
+        <div style="display:flex;gap:0.5rem;max-width:500px;margin:0 auto">
+          <input class="mock-input" style="flex:1" placeholder="Buscar por título, autor ou gênero...">
+          <button class="mock-button">Buscar</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;padding:0 1rem">
+        <button class="mock-button" style="font-size:0.8rem">🔪 Suspense</button>
+        <button class="mock-button" style="font-size:0.8rem">💕 Romance</button>
+        <button class="mock-button" style="font-size:0.8rem">🔬 Ciência</button>
+        <button class="mock-button" style="font-size:0.8rem">🧙 Fantasia</button>
+        <button class="mock-button" style="font-size:0.8rem">📜 História</button>
+        <button class="mock-button" style="font-size:0.8rem">🇧🇷 Autores Nacionais</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Search Results + Filters</h3>
+  <div class="mockup">
+    <div class="mockup-header">/busca?q=suspense</div>
+    <div class="mockup-body" style="display:flex;gap:1rem">
+      <div class="mock-sidebar" style="min-width:160px">
+        <strong style="font-size:0.8rem">Filtros</strong><br><br>
+        <div style="font-size:0.8rem;line-height:2">
+          <b>Gênero</b><br>
+          ☑ Suspense<br>□ Romance<br>□ Ciência<br><br>
+          <b>Páginas</b><br>
+          □ Curto (&lt;200)<br>□ Médio (200–400)<br>□ Longo (&gt;400)<br><br>
+          <b>Origem</b><br>
+          □ Nacional 🇧🇷<br>□ Internacional<br><br>
+          <b>Idioma</b><br>
+          □ Disponível em PT
+        </div>
+      </div>
+      <div style="flex:1">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem">
+          <div style="border:1px solid var(--border);border-radius:6px;padding:0.6rem;font-size:0.8rem">
+            <div class="placeholder" style="height:80px;margin-bottom:0.4rem"></div>
+            <b>Título do Livro</b><br>Autor Nome<br>
+            <span style="color:var(--text-muted)">342 páginas</span><br>
+            <button class="mock-button" style="font-size:0.7rem;margin-top:0.4rem;width:100%">Comprar na Amazon</button>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:6px;padding:0.6rem;font-size:0.8rem">
+            <div class="placeholder" style="height:80px;margin-bottom:0.4rem"></div>
+            <b>Outro Livro</b><br>Autor Nome<br>
+            <span style="color:var(--text-muted)">198 páginas</span><br>
+            <button class="mock-button" style="font-size:0.7rem;margin-top:0.4rem;width:100%">Comprar na Amazon</button>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:6px;padding:0.6rem;font-size:0.8rem">
+            <div class="placeholder" style="height:80px;margin-bottom:0.4rem"></div>
+            <b>Mais um Livro</b><br>Autor Nome<br>
+            <span style="color:var(--text-muted)">512 páginas</span><br>
+            <button class="mock-button" style="font-size:0.7rem;margin-top:0.4rem;width:100%">Comprar na Amazon</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Book Detail Page</h3>
+  <div class="mockup">
+    <div class="mockup-header">/livro/[id]/[slug]</div>
+    <div class="mockup-body" style="display:flex;gap:1.5rem">
+      <div class="placeholder" style="width:100px;min-width:100px;height:150px"></div>
+      <div style="flex:1;font-size:0.85rem">
+        <h3 style="margin:0 0 0.3rem">Título Completo do Livro</h3>
+        <div style="color:var(--text-muted)">Autor · 342 páginas · Suspense · 🌍 Internacional</div>
+        <div style="margin:0.6rem 0">✅ Disponível em Português</div>
+        <p style="color:var(--text-muted)">Descrição do livro em português...</p>
+        <button class="mock-button" style="background:#ff9900;border-color:#ff9900">🛒 Comprar na Amazon Brasil</button>
+      </div>
+    </div>
+    <div style="margin-top:1rem;font-size:0.85rem;padding:0.5rem">
+      <b>Livros Parecidos</b>
+      <div style="display:flex;gap:0.8rem;margin-top:0.5rem">
+        <div style="text-align:center;font-size:0.75rem"><div class="placeholder" style="width:60px;height:90px;margin:0 auto 0.3rem"></div>Livro 1</div>
+        <div style="text-align:center;font-size:0.75rem"><div class="placeholder" style="width:60px;height:90px;margin:0 auto 0.3rem"></div>Livro 2</div>
+        <div style="text-align:center;font-size:0.75rem"><div class="placeholder" style="width:60px;height:90px;margin:0 auto 0.3rem"></div>Livro 3</div>
+        <div style="text-align:center;font-size:0.75rem"><div class="placeholder" style="width:60px;height:90px;margin:0 auto 0.3rem"></div>Livro 4</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">Does this UI layout look right? Let me know in the terminal.</p>

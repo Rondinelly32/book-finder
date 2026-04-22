@@ -1,0 +1,42 @@
+<h2>3 Architectural Approaches</h2>
+<p class="subtitle">Each has different trade-offs for complexity, SEO, and scalability</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Full Static (JAMstack)</h3>
+      <p>Next.js generates all pages at build time using Google Books API. Deployed on Vercel for free.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Blazing fast, perfect SEO</li><li>Free hosting (Vercel)</li><li>Zero backend to maintain</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Book data can go stale</li><li>Slow builds as site grows</li><li>Search must call API client-side</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B ⭐ Recommended</div>
+    <div class="content">
+      <h3>Next.js with ISR + API Routes</h3>
+      <p>Book/category pages use Incremental Static Regeneration — pre-built but auto-refreshed. API Routes proxy Google Books so keys stay server-side.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Always fresh data, great SEO</li><li>Search is fast via API routes</li><li>API key never exposed to browser</li><li>Still deployable on Vercel free tier</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Slightly more setup than pure static</li><li>Cold starts on API routes (minimal)</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Next.js + Separate Backend + Database</h3>
+      <p>Next.js frontend + FastAPI/Express backend + PostgreSQL to cache books, track searches, and aggregate multiple APIs.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Maximum flexibility</li><li>Can mix multiple book data sources</li><li>Analytics &amp; personalisation later</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Much more infrastructure to maintain</li><li>Higher cost (database server)</li><li>Overkill for an MVP</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:1.5rem">Click your preferred approach, or tell me in the terminal.</p>
