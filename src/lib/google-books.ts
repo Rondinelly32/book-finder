@@ -46,16 +46,22 @@ export async function searchBooks(query: string, maxResults = 20): Promise<Book[
 }
 
 export async function getBook(id: string): Promise<Book | null> {
-  const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
-  const url = `${BASE}/volumes/${id}${apiKey ? `?key=${apiKey}` : ''}`;
+  const url = `${BASE}/volumes/${id}?printType=books${key()}`;
   const res = await fetch(url, { next: { revalidate: 86400 } });
   if (!res.ok) return null;
   return parseVolume(await res.json());
 }
 
+function normalizeSubject(category: string): string {
+  // Google Books categories look like "Fiction / Science Fiction" — take the last segment
+  const parts = category.split('/').map(s => s.trim());
+  return parts[parts.length - 1];
+}
+
 export async function getSimilarBooks(book: Book, maxResults = 6): Promise<Book[]> {
-  const subject = book.categories[0];
-  if (!subject) return [];
+  const rawSubject = book.categories[0];
+  if (!rawSubject) return [];
+  const subject = normalizeSubject(rawSubject);
   const q = `subject:${subject}`;
   const url = `${BASE}/volumes?q=${encodeURIComponent(q)}&maxResults=${maxResults}&printType=books${key()}`;
   const res = await fetch(url, { next: { revalidate: 86400 } });

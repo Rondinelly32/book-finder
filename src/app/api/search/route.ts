@@ -12,10 +12,19 @@ export async function GET(request: NextRequest) {
   const query = genre ? `${q} subject:${genre}` : q;
   const books = await searchBooks(query);
 
+  const validPageRanges: Filters['pageRange'][] = ['all', 'curto', 'medio', 'longo'];
+  const validOrigens: Filters['origem'][] = ['all', 'nacional', 'internacional'];
+  const rawPageRange = searchParams.get('pages') ?? 'all';
+  const rawOrigem = searchParams.get('origem') ?? 'all';
+
   const filters: Filters = {
     genre,
-    pageRange: (searchParams.get('pages') as Filters['pageRange']) ?? 'all',
-    origem: (searchParams.get('origem') as Filters['origem']) ?? 'all',
+    pageRange: (validPageRanges as string[]).includes(rawPageRange)
+      ? (rawPageRange as Filters['pageRange'])
+      : 'all',
+    origem: (validOrigens as string[]).includes(rawOrigem)
+      ? (rawOrigem as Filters['origem'])
+      : 'all',
     portugues: searchParams.get('portugues') === 'true',
   };
 
