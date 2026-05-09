@@ -16,6 +16,10 @@ export function parseVolume(volume: any): Book {
   const thumbnail = (info.imageLinks?.thumbnail ?? '').replace('http://', 'https://');
   const isNational = BRAZILIAN_PUBLISHERS.some(p => publisher.toLowerCase().includes(p));
 
+  const identifiers: { type: string; identifier: string }[] = info.industryIdentifiers ?? [];
+  const isbn = identifiers.find(i => i.type === 'ISBN_10')?.identifier
+    ?? identifiers.find(i => i.type === 'ISBN_13')?.identifier;
+
   return {
     id: volume.id as string,
     title: info.title ?? 'Sem título',
@@ -27,6 +31,7 @@ export function parseVolume(volume: any): Book {
     publisher,
     publishedDate: info.publishedDate ?? '',
     thumbnail,
+    isbn,
     isPortuguese: language === 'pt',
     isNational,
   };
@@ -37,9 +42,8 @@ function key(): string {
   return k ? `&key=${k}` : '';
 }
 
-export async function searchBooks(query: string, maxResults = 20, langRestrict?: string): Promise<Book[]> {
-  const lang = langRestrict ? `&langRestrict=${langRestrict}` : '';
-  const url = `${BASE}/volumes?q=${encodeURIComponent(query)}&maxResults=${maxResults}&printType=books${lang}${key()}`;
+export async function searchBooks(query: string, maxResults = 20): Promise<Book[]> {
+  const url = `${BASE}/volumes?q=${encodeURIComponent(query)}&maxResults=${maxResults}&printType=books${key()}`;
   const res = await fetch(url, { next: { revalidate: 3600 } });
   if (!res.ok) return [];
   const data = await res.json();

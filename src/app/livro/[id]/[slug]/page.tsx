@@ -28,7 +28,7 @@ export default async function LivroPage({ params }: { params: { id: string } }) 
   if (!book) notFound();
 
   const similar = await getSimilarBooks(book);
-  const affiliateUrl = buildAffiliateLink(book.title, book.authors[0] ?? '');
+  const affiliateUrl = buildAffiliateLink(book.title, book.authors[0] ?? '', book.isbn);
 
   const jsonLd = {
     '@context': 'https://schema.org',

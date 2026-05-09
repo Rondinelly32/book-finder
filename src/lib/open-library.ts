@@ -19,6 +19,9 @@ function parseDoc(doc: any): Book {
   const isNational = BRAZILIAN_PUBLISHERS.some(p => publisher.toLowerCase().includes(p));
   const olKey = (doc.key as string).replace('/works/', '');
 
+  const isbns: string[] = doc.isbn ?? [];
+  const isbn = isbns.find(i => i.length === 10) ?? isbns.find(i => i.length === 13);
+
   return {
     id: `ol-${olKey}`,
     title: doc.title ?? 'Sem título',
@@ -30,13 +33,14 @@ function parseDoc(doc: any): Book {
     publisher,
     publishedDate: doc.first_publish_year ? String(doc.first_publish_year) : '',
     thumbnail,
+    isbn,
     isPortuguese: languages.includes('por'),
     isNational,
   };
 }
 
 export async function searchOpenLibrary(query: string, maxResults = 20): Promise<Book[]> {
-  const fields = 'key,title,author_name,cover_i,language,publisher,subject,number_of_pages_median,first_publish_year';
+  const fields = 'key,title,author_name,cover_i,language,publisher,subject,number_of_pages_median,first_publish_year,isbn';
   const url = `${BASE}/search.json?q=${encodeURIComponent(query)}&language=por&limit=${maxResults}&fields=${fields}`;
   const res = await fetch(url, {
     next: { revalidate: 3600 },

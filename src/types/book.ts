@@ -9,6 +9,8 @@ export interface Book {
   publisher: string;
   publishedDate: string;
   thumbnail: string;
+  /** ISBN-10 used for direct Amazon product link */
+  isbn?: string;
   /** true if language === 'pt' */
   isPortuguese: boolean;
   /** true if publisher is a known Brazilian publisher */
