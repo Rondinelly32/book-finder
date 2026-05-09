@@ -10,7 +10,8 @@ export async function GET(request: NextRequest) {
 
   const genre = searchParams.get('genre') ?? '';
   const query = genre ? `${q} subject:${genre}` : q;
-  const books = await searchBooks(query);
+  const portugues = searchParams.get('portugues') === 'true';
+  const books = await searchBooks(query, 20, portugues ? 'pt' : undefined);
 
   const validPageRanges: Filters['pageRange'][] = ['all', 'curto', 'medio', 'longo'];
   const validOrigens: Filters['origem'][] = ['all', 'nacional', 'internacional'];
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
     origem: (validOrigens as string[]).includes(rawOrigem)
       ? (rawOrigem as Filters['origem'])
       : 'all',
-    portugues: searchParams.get('portugues') === 'true',
+    portugues,
   };
 
   const filtered = applyFilters(books, filters);

@@ -37,8 +37,9 @@ function key(): string {
   return k ? `&key=${k}` : '';
 }
 
-export async function searchBooks(query: string, maxResults = 20): Promise<Book[]> {
-  const url = `${BASE}/volumes?q=${encodeURIComponent(query)}&maxResults=${maxResults}&printType=books${key()}`;
+export async function searchBooks(query: string, maxResults = 20, langRestrict?: string): Promise<Book[]> {
+  const lang = langRestrict ? `&langRestrict=${langRestrict}` : '';
+  const url = `${BASE}/volumes?q=${encodeURIComponent(query)}&maxResults=${maxResults}&printType=books${lang}${key()}`;
   const res = await fetch(url, { next: { revalidate: 3600 } });
   if (!res.ok) return [];
   const data = await res.json();
