@@ -22,7 +22,7 @@ export default function BookGrid({ books }: Props) {
         <BookCard
           key={book.id}
           book={book}
-          affiliateUrl={buildAffiliateLink(book.title, book.authors[0] ?? '')}
+          affiliateUrl={buildAffiliateLink(book.title, book.authors[0] ?? '', book.isbn)}
         />
       ))}
     </div>
