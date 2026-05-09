@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'books.google.com' },
+      { protocol: 'https', hostname: 'covers.openlibrary.org' },
     ],
   },
 };
