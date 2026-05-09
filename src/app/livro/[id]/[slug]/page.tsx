@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getBook, getSimilarBooks } from '@/lib/google-books';
+import { getOpenLibraryBook } from '@/lib/open-library';
+import { getSimilarBooks } from '@/lib/google-books';
 import { buildAffiliateLink } from '@/lib/affiliate';
 import AmazonButton from '@/components/AmazonButton';
 import SimilarBooks from '@/components/SimilarBooks';
@@ -9,7 +10,8 @@ import SimilarBooks from '@/components/SimilarBooks';
 export const revalidate = 86400;
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const book = await getBook(params.id);
+  const olKey = params.id.startsWith('ol-') ? params.id.slice(3) : params.id;
+  const book = await getOpenLibraryBook(olKey);
   if (!book) return {};
   const desc = book.description.slice(0, 155) || `Saiba mais sobre "${book.title}" de ${book.authors[0]} e compre na Amazon Brasil.`;
   return {
@@ -24,7 +26,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 export default async function LivroPage({ params }: { params: { id: string } }) {
-  const book = await getBook(params.id);
+  const olKey = params.id.startsWith('ol-') ? params.id.slice(3) : params.id;
+  const book = await getOpenLibraryBook(olKey);
   if (!book) notFound();
 
   const similar = await getSimilarBooks(book);

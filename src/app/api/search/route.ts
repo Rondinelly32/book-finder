@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { searchBooks } from '@/lib/google-books';
 import { searchOpenLibrary } from '@/lib/open-library';
 import { applyFilters } from '@/lib/filters';
 import { Filters } from '@/types/book';
@@ -11,10 +10,7 @@ export async function GET(request: NextRequest) {
 
   const genre = searchParams.get('genre') ?? '';
   const query = genre ? `${q} subject:${genre}` : q;
-  const portugues = searchParams.get('portugues') === 'true';
-  const books = portugues
-    ? await searchOpenLibrary(query)
-    : await searchBooks(query);
+  const books = await searchOpenLibrary(query);
 
   const validPageRanges: Filters['pageRange'][] = ['all', 'curto', 'medio', 'longo'];
   const validOrigens: Filters['origem'][] = ['all', 'nacional', 'internacional'];
@@ -29,7 +25,7 @@ export async function GET(request: NextRequest) {
     origem: (validOrigens as string[]).includes(rawOrigem)
       ? (rawOrigem as Filters['origem'])
       : 'all',
-    portugues,
+    portugues: true,
   };
 
   const filtered = applyFilters(books, filters);
