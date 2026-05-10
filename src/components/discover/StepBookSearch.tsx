@@ -12,9 +12,9 @@ interface Props {
 }
 
 interface SearchResult {
-  key: string;
+  id: string;
   title: string;
-  author_name?: string[];
+  authors: string[];
 }
 
 export default function StepBookSearch({ onSelect }: Props) {
@@ -26,11 +26,10 @@ export default function StepBookSearch({ onSelect }: Props) {
     if (q.trim().length < 2) { setResults([]); return; }
     setLoading(true);
     try {
-      const res = await fetch(
-        `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=6&fields=key,title,author_name`
-      );
+      // Use our own API which resolves PT edition titles
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
       const data = await res.json();
-      setResults(data.docs ?? []);
+      setResults((data.books ?? []).slice(0, 6));
     } finally {
       setLoading(false);
     }
@@ -74,17 +73,18 @@ export default function StepBookSearch({ onSelect }: Props) {
       {results.length > 0 && (
         <ul className="mt-1.5 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm divide-y divide-stone-100">
           {results.map(r => {
-            const olKey = r.key.replace('/works/', '');
+            // id is "ol-OL12345W" — extract the OL key
+            const olKey = r.id.startsWith('ol-') ? r.id.slice(3) : r.id;
             return (
-              <li key={r.key}>
+              <li key={r.id}>
                 <button
                   type="button"
                   onClick={() => onSelect({ olKey, title: r.title })}
                   className="w-full text-left px-4 py-3 hover:bg-stone-50 transition-colors"
                 >
                   <p className="text-sm font-medium text-stone-900">{r.title}</p>
-                  {r.author_name?.[0] && (
-                    <p className="text-xs text-stone-400 mt-0.5">{r.author_name[0]}</p>
+                  {r.authors[0] && (
+                    <p className="text-xs text-stone-400 mt-0.5">{r.authors[0]}</p>
                   )}
                 </button>
               </li>
