@@ -2,7 +2,7 @@ import { Book } from '@/types/book';
 
 const BASE = 'https://openlibrary.org';
 const COVERS = 'https://covers.openlibrary.org/b/id';
-const HEADERS = { 'User-Agent': 'AcheUmLivro/1.0 (book discovery app)' };
+const HEADERS = { 'User-Agent': 'ProximoLivro/1.0 (book discovery app)' };
 
 const BRAZILIAN_PUBLISHERS = [
   'companhia das letras', 'record', 'intrínseca', 'intrinseca',

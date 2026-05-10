@@ -22,7 +22,7 @@ import JsonLd from '@/components/JsonLd';
 
 export const revalidate = 86400;
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://acheumlivro.com.br';
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com.br';
 
 export async function generateStaticParams() {
   return CATEGORIES.map(genero => ({ genero }));
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: { genero: string } 
   const canonical = `${SITE}/categoria/${genero}`;
 
   return {
-    title: `Melhores Livros de ${label} em Português — Ache um Livro`,
+    title: `Melhores Livros de ${label} em Português — próximolivro`,
     description,
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: { genero: string } 
       description,
       url: canonical,
       type: 'website',
-      siteName: 'Ache um Livro',
+      siteName: 'próximolivro',
       locale: 'pt_BR',
     },
   };

@@ -4,7 +4,7 @@ import { CATEGORIES, CATEGORY_LABELS } from '@/lib/categories';
 import QuestionnaireClient from '@/components/discover/QuestionnaireClient';
 
 export const metadata: Metadata = {
-  title: 'Ache um Livro — Encontre o Livro Perfeito para Você',
+  title: 'próximolivro — Descubra seu próximo livro',
   description: 'Terminou um livro e não sabe o que ler agora? Responda um questionário rápido e receba recomendações personalizadas em português para comprar na Amazon Brasil.',
 };
 

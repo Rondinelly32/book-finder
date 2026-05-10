@@ -7,7 +7,7 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://acheumlivro.com.br';
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com.br';
 
 const SITE_JSON_LD = {
   '@context': 'https://schema.org',
@@ -15,7 +15,7 @@ const SITE_JSON_LD = {
     {
       '@type': 'WebSite',
       '@id': `${SITE}/#website`,
-      name: 'Ache um Livro',
+      name: 'próximolivro',
       url: SITE,
       description: 'Descubra o próximo livro que você vai amar. Recomendações personalizadas em português com compra na Amazon Brasil.',
       inLanguage: 'pt-BR',
@@ -28,7 +28,7 @@ const SITE_JSON_LD = {
     {
       '@type': 'Organization',
       '@id': `${SITE}/#organization`,
-      name: 'Ache um Livro',
+      name: 'próximolivro',
       url: SITE,
       description: 'Site brasileiro de descoberta e recomendação de livros em português, com compra via Amazon Brasil.',
     },
@@ -38,11 +38,11 @@ const SITE_JSON_LD = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: 'Ache um Livro — Encontre o Livro Perfeito para Você',
-    template: '%s | Ache um Livro',
+    default: 'próximolivro — Descubra seu próximo livro',
+    template: '%s | próximolivro',
   },
   description: 'Descubra o próximo livro que você vai amar. Recomendações personalizadas em português com compra na Amazon Brasil.',
-  openGraph: { siteName: 'Ache um Livro', locale: 'pt_BR', type: 'website' },
+  openGraph: { siteName: 'próximolivro', locale: 'pt_BR', type: 'website' },
 };
 
 const NAV_LINKS = [
@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
               <span className="font-semibold text-[15px] tracking-tight text-stone-900 group-hover:text-blue-600 transition-colors">
-                Ache um Livro
+                próximolivro
               </span>
             </Link>
 
@@ -98,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <footer className="border-t border-stone-200 mt-20">
           <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-400">
-            <p className="font-medium text-stone-500">Ache um Livro</p>
+            <p className="font-medium text-stone-500">próximolivro</p>
             <p>Participante do Programa de Afiliados da Amazon Brasil. Os preços são definidos pela Amazon.</p>
           </div>
         </footer>
