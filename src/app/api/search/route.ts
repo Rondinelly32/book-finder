@@ -10,7 +10,9 @@ export async function GET(request: NextRequest) {
 
   const genre = searchParams.get('genre') ?? '';
   const query = genre ? `${q} subject:${genre}` : q;
-  const books = await searchOpenLibrary(query);
+  const limitParam = parseInt(searchParams.get('limit') ?? '20', 10);
+  const limit = Math.min(Math.max(limitParam, 1), 40);
+  const books = await searchOpenLibrary(query, limit);
 
   const validPageRanges: Filters['pageRange'][] = ['all', 'curto', 'medio', 'longo'];
   const validOrigens: Filters['origem'][] = ['all', 'nacional', 'internacional'];

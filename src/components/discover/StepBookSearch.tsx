@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 interface RefBook {
   olKey: string;
@@ -21,15 +21,15 @@ export default function StepBookSearch({ onSelect }: Props) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   async function search(q: string) {
-    if (q.trim().length < 2) { setResults([]); return; }
+    if (q.trim().length < 2) { setResults([]); setLoading(false); return; }
     setLoading(true);
     try {
-      // Use our own API which resolves PT edition titles
-      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&limit=6`);
       const data = await res.json();
-      setResults((data.books ?? []).slice(0, 6));
+      setResults(data.books ?? []);
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,10 @@ export default function StepBookSearch({ onSelect }: Props) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const val = e.target.value;
     setQuery(val);
-    search(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (val.trim().length < 2) { setResults([]); return; }
+    setLoading(true); // show spinner immediately while debouncing
+    debounceRef.current = setTimeout(() => search(val), 500);
   }
 
   return (

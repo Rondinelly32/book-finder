@@ -61,9 +61,9 @@ async function fetchPtEdition(workKey: string, isbns: string[] = []): Promise<Pt
     if (result) return result;
   }
 
-  // Fallback: scan first 50 editions
+  // Fallback: scan first editions page filtered by language=por (faster than fetching all 50)
   const key = workKey.replace('/works/', '');
-  const res = await fetch(`${BASE}/works/${key}/editions.json?limit=50`, {
+  const res = await fetch(`${BASE}/works/${key}/editions.json?limit=20`, {
     next: { revalidate: 3600 },
     headers: HEADERS,
   });
