@@ -17,7 +17,7 @@ export default function StepResults({ books, onReset }: Props) {
             {books.length > 0 ? 'Recomendados para você' : 'Nenhum resultado'}
           </h2>
           {books.length > 0 && (
-            <p className="text-xs text-stone-400 mt-0.5">{books.length} livros em português</p>
+            <p className="text-xs text-stone-400 mt-0.5">{books.length} livros encontrados</p>
           )}
         </div>
         <button

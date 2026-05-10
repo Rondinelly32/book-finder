@@ -113,11 +113,6 @@ export default async function LivroPage({ params }: { params: { id: string } }) 
                 {book.publisher}
               </span>
             )}
-            {book.isPortuguese && (
-              <span className="inline-flex items-center text-xs text-blue-700 bg-blue-50 rounded-full px-3 py-1">
-                Disponível em português
-              </span>
-            )}
           </div>
 
           {book.description && (

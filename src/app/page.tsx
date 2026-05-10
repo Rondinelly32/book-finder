@@ -20,7 +20,7 @@ export default function HomePage() {
           Qual livro você vai ler a seguir?
         </h1>
         <p className="text-stone-500 text-[15px] leading-relaxed">
-          Informe sua última leitura, responda algumas perguntas e descubra o próximo livro perfeito para você — em português.
+          Informe sua última leitura, responda algumas perguntas e descubra o próximo livro perfeito para você.
         </p>
       </div>
 

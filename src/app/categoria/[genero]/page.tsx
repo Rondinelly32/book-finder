@@ -198,7 +198,7 @@ export default async function CategoriaPage({ params }: { params: { genero: stri
           <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-sm px-4 py-3 text-right">
             <p className="text-[11px] text-stone-400 mb-0.5">Livros encontrados</p>
             <p className="text-2xl font-bold text-stone-900 leading-none">{books.length}</p>
-            <p className="text-[10px] text-stone-400 mt-1">em português</p>
+            <p className="text-[10px] text-stone-400 mt-1">títulos encontrados</p>
           </div>
         </div>
       </header>
@@ -230,7 +230,7 @@ export default async function CategoriaPage({ params }: { params: { genero: stri
       <section id="livros" aria-label={`Lista de livros de ${label}`} className="mb-14">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-base font-semibold text-stone-900">
-            Livros de {label} em português
+            Livros de {label}
           </h2>
           <span className="text-xs text-stone-400">{books.length} títulos</span>
         </div>
