@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { searchBooks } from '@/lib/google-books';
+import { searchOpenLibrary } from '@/lib/open-library';
 import { CATEGORIES, CATEGORY_LABELS, CATEGORY_QUERIES, Category } from '@/lib/categories';
 import BookGrid from '@/components/BookGrid';
 import SearchBar from '@/components/SearchBar';
@@ -28,7 +28,7 @@ export default async function CategoriaPage({ params }: { params: { genero: stri
   const genero = params.genero as Category;
   if (!CATEGORIES.includes(genero)) notFound();
 
-  const books = await searchBooks(CATEGORY_QUERIES[genero], 20);
+  const books = await searchOpenLibrary(CATEGORY_QUERIES[genero], 20);
   const label = CATEGORY_LABELS[genero];
 
   return (
