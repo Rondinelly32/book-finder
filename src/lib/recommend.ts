@@ -65,28 +65,35 @@ function excludeFantasy(books: Book[], world?: World): Book[] {
 export async function getRecommendations(params: RecommendParams): Promise<Book[]> {
   const { refBook, mood, focus, size, pace, world } = params;
 
-  let subjects: string[] = [
-    ...MOOD_SUBJECTS[mood],
-    ...FOCUS_SUBJECTS[focus],
-  ];
+  // Primary subjects from answers — always reliable
+  const moodSubjects = MOOD_SUBJECTS[mood];
+  const focusSubject = FOCUS_SUBJECTS[focus][0];
+  const worldSubjects = world && world !== 'real' ? WORLD_SUBJECTS[world] : [];
 
-  if (world && world !== 'real') {
-    subjects.push(...WORLD_SUBJECTS[world]);
-  }
-
-  // Add subjects from reference book
+  // Get 1 genre-level subject from reference book to add flavor
+  let refSubject: string | undefined;
   if (refBook) {
     const refSubjects = await getWorkSubjects(refBook).catch(() => []);
-    subjects = [...refSubjects, ...subjects];
+    refSubject = refSubjects[0];
   }
 
-  // Deduplicate
-  const seenSubjects = new Set<string>();
-  subjects = subjects.filter(s => { if (seenSubjects.has(s)) return false; seenSubjects.add(s); return true; });
+  // Build a 2-subject query: mood primary + either refBook subject or focus subject
+  // Keeping it to 2 subjects avoids AND logic being too restrictive
+  const secondSubject = refSubject ?? focusSubject;
+  const primaryQuery = buildQuery([moodSubjects[0], secondSubject].filter(Boolean) as string[]);
 
-  // Build and execute query
-  const query = buildQuery(subjects.slice(0, 4));
-  let books = await searchOpenLibrary(query, 24);
+  let books = await searchOpenLibrary(primaryQuery, 24);
+
+  // Fallback: if too few results, search with just the primary mood subject
+  if (books.length < 6) {
+    const fallbackQuery = buildQuery([
+      ...(worldSubjects.length ? [worldSubjects[0]] : [moodSubjects[0]]),
+    ]);
+    const fallback = await searchOpenLibrary(fallbackQuery, 24);
+    // Merge, deduplicate by id
+    const ids = new Set(books.map(b => b.id));
+    books = [...books, ...fallback.filter(b => !ids.has(b.id))];
+  }
 
   // Apply filters
   books = filterByPages(books, size, pace);

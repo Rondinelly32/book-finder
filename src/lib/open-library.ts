@@ -135,7 +135,15 @@ const GENERIC_SUBJECTS = new Set([
   'large type books', 'new york times bestseller', 'accessible book',
   'internet archive wishlist', 'in library', 'overdrive', 'protected daisy',
   'fictitious character', 'open library staff picks',
+  // Too narrow / character-level — useless for cross-book recommendations
+  'juvenile fiction', "children's fiction", 'young adult fiction', 'ya fiction',
+  'school stories', 'ghosts', 'monsters', 'vampires', 'witches', 'wizards',
+  'magic', 'supernatural', 'magia', 'magos', 'cleverness',
+  'challenges and overcoming obstacles', 'magic and supernatural',
 ]);
+
+// Prefixes that indicate series/character tags, not genres
+const SUBJECT_PREFIX_BLOCKLIST = ['series:', 'nyt:', 'subject:'];
 
 export async function getWorkSubjects(olKey: string): Promise<string[]> {
   const res = await fetch(`${BASE}/works/${olKey}.json`, {
@@ -145,7 +153,11 @@ export async function getWorkSubjects(olKey: string): Promise<string[]> {
   if (!res.ok) return [];
   const data = await res.json();
   return ((data.subjects ?? []) as string[])
-    .filter(s => !GENERIC_SUBJECTS.has(s.toLowerCase()) && !s.startsWith('nyt:') && s.length < 50)
+    .filter(s =>
+      s.length < 50 &&
+      !GENERIC_SUBJECTS.has(s.toLowerCase()) &&
+      !SUBJECT_PREFIX_BLOCKLIST.some(p => s.toLowerCase().startsWith(p))
+    )
     .slice(0, 5);
 }
 
