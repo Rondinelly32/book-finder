@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { CATEGORIES } from '@/lib/categories';
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com.br';
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

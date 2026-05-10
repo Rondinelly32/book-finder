@@ -22,7 +22,7 @@ import JsonLd from '@/components/JsonLd';
 
 export const revalidate = 86400;
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com.br';
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com';
 
 export async function generateStaticParams() {
   return CATEGORIES.map(genero => ({ genero }));

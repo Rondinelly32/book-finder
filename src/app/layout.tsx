@@ -7,7 +7,7 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com.br';
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proximolivro.com';
 
 const SITE_JSON_LD = {
   '@context': 'https://schema.org',
