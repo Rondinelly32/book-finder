@@ -13,28 +13,41 @@ export default function BookCard({ book, affiliateUrl }: Props) {
   const slug = generateSlug(`${book.title} ${book.authors[0] ?? ''}`);
 
   return (
-    <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-      <Link href={`/livro/${book.id}/${slug}`} className="flex-1 p-3">
-        <div className="relative w-full aspect-[2/3] bg-gray-100 mb-2 rounded overflow-hidden">
+    <article className="group flex flex-col bg-white border border-stone-200 rounded-xl overflow-hidden hover:border-stone-300 hover:shadow-sm transition-all duration-200">
+      <Link href={`/livro/${book.id}/${slug}`} className="block p-4 pb-3">
+        {/* Cover */}
+        <div className="relative w-full aspect-[2/3] bg-stone-100 rounded-lg overflow-hidden mb-4">
           {book.thumbnail ? (
             <Image
-                  src={book.thumbnail}
-                  alt={`Capa do livro ${book.title}${book.authors[0] ? ` de ${book.authors[0]}` : ''}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
-                />
+              src={book.thumbnail}
+              alt={`Capa do livro ${book.title}${book.authors[0] ? ` de ${book.authors[0]}` : ''}`}
+              fill
+              className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
+              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw"
+              loading="lazy"
+            />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-xs">Sem capa</div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-stone-300 text-xs text-center px-3">Sem capa</span>
+            </div>
           )}
         </div>
-        <h3 className="font-semibold text-sm line-clamp-2">{book.title}</h3>
-        <p className="text-xs text-gray-500 mt-0.5">{book.authors[0]}</p>
-        <p className="text-xs text-gray-400 mt-0.5">{book.pageCount} páginas</p>
+
+        {/* Meta */}
+        <h3 className="font-semibold text-[13px] leading-snug text-stone-900 line-clamp-2 mb-1">
+          {book.title}
+        </h3>
+        {book.authors[0] && (
+          <p className="text-[12px] text-stone-500 truncate">{book.authors[0]}</p>
+        )}
+        {book.pageCount > 0 && (
+          <p className="text-[11px] text-stone-400 mt-0.5">{book.pageCount} pág.</p>
+        )}
       </Link>
-      <div className="p-3 pt-0">
+
+      <div className="px-4 pb-4 mt-auto">
         <AmazonButton title={book.title} author={book.authors[0] ?? ''} affiliateUrl={affiliateUrl} />
       </div>
-    </div>
+    </article>
   );
 }

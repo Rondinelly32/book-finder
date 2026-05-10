@@ -11,24 +11,37 @@ interface Props {
 export default function StepResults({ books, onReset }: Props) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">
-          {books.length > 0 ? 'Livros recomendados para você' : 'Nenhum livro encontrado'}
-        </h2>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="text-lg font-semibold tracking-tight text-stone-900">
+            {books.length > 0 ? 'Recomendados para você' : 'Nenhum resultado'}
+          </h2>
+          {books.length > 0 && (
+            <p className="text-xs text-stone-400 mt-0.5">{books.length} livros em português</p>
+          )}
+        </div>
         <button
           type="button"
           onClick={onReset}
-          className="text-sm text-blue-600 hover:underline"
+          className="text-xs text-stone-400 hover:text-stone-700 transition-colors border border-stone-200 rounded-lg px-3 py-1.5"
         >
           Recomeçar
         </button>
       </div>
+
       {books.length > 0 ? (
         <BookGrid books={books} />
       ) : (
-        <p className="text-gray-500 text-sm text-center py-8">
-          Tente outras respostas para encontrar livros.
-        </p>
+        <div className="text-center py-16 text-stone-400">
+          <p className="text-sm mb-4">Tente outras combinações de respostas.</p>
+          <button
+            type="button"
+            onClick={onReset}
+            className="text-sm text-stone-600 hover:text-stone-900 border border-stone-200 rounded-lg px-4 py-2 transition-colors"
+          >
+            Tentar novamente
+          </button>
+        </div>
       )}
     </div>
   );

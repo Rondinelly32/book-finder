@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import { getOpenLibraryBook } from '@/lib/open-library';
 import { getSimilarBooks } from '@/lib/google-books';
@@ -43,7 +44,7 @@ export default async function LivroPage({ params }: { params: { id: string } }) 
     datePublished: book.publishedDate,
     description: book.description,
     image: book.thumbnail,
-    inLanguage: book.language,
+    inLanguage: 'pt-BR',
     offers: {
       '@type': 'Offer',
       url: affiliateUrl,
@@ -55,32 +56,80 @@ export default async function LivroPage({ params }: { params: { id: string } }) 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className="flex flex-col sm:flex-row gap-8">
+
+      {/* Breadcrumb */}
+      <nav aria-label="Navegação estrutural" className="mb-10 text-xs text-stone-400 flex items-center gap-1.5">
+        <Link href="/" className="hover:text-stone-700 transition-colors">Início</Link>
+        <span>/</span>
+        <span className="text-stone-600">{book.title}</span>
+      </nav>
+
+      {/* Book detail */}
+      <div className="flex flex-col sm:flex-row gap-10 lg:gap-16">
+        {/* Cover */}
         <div className="shrink-0">
-          <div className="relative w-40 h-56 bg-gray-100 rounded overflow-hidden">
+          <div className="relative w-44 sm:w-52 aspect-[2/3] bg-stone-100 rounded-xl overflow-hidden shadow-sm">
             {book.thumbnail ? (
-              <Image src={book.thumbnail} alt={book.title} fill className="object-cover" sizes="160px" priority />
+              <Image
+                src={book.thumbnail}
+                alt={`Capa do livro ${book.title}${book.authors[0] ? ` de ${book.authors[0]}` : ''}`}
+                fill
+                className="object-cover"
+                sizes="220px"
+                priority
+              />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">Sem capa</div>
+              <div className="absolute inset-0 flex items-center justify-center text-stone-300 text-sm">
+                Sem capa
+              </div>
             )}
           </div>
         </div>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold mb-1">{book.title}</h1>
-          <p className="text-gray-500 mb-1">{book.authors.join(', ')}</p>
-          <div className="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
-            {book.pageCount > 0 && <span>{book.pageCount} páginas</span>}
-            {book.publishedDate && <span>· {book.publishedDate.slice(0, 4)}</span>}
-            {book.publisher && <span>· {book.publisher}</span>}
-            <span>· {book.isNational ? '🇧🇷 Nacional' : '🌍 Internacional'}</span>
-            {book.isPortuguese && <span>· ✅ Disponível em Português</span>}
-          </div>
-          {book.description && (
-            <p className="text-sm text-gray-700 mb-6 leading-relaxed">{book.description}</p>
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-stone-900 mb-2 text-balance">
+            {book.title}
+          </h1>
+
+          {book.authors.length > 0 && (
+            <p className="text-base text-stone-500 mb-5">{book.authors.join(', ')}</p>
           )}
+
+          {/* Metadata pills */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {book.pageCount > 0 && (
+              <span className="inline-flex items-center text-xs text-stone-500 bg-stone-100 rounded-full px-3 py-1">
+                {book.pageCount} páginas
+              </span>
+            )}
+            {book.publishedDate && (
+              <span className="inline-flex items-center text-xs text-stone-500 bg-stone-100 rounded-full px-3 py-1">
+                {book.publishedDate.slice(0, 4)}
+              </span>
+            )}
+            {book.publisher && (
+              <span className="inline-flex items-center text-xs text-stone-500 bg-stone-100 rounded-full px-3 py-1">
+                {book.publisher}
+              </span>
+            )}
+            {book.isPortuguese && (
+              <span className="inline-flex items-center text-xs text-blue-700 bg-blue-50 rounded-full px-3 py-1">
+                Disponível em português
+              </span>
+            )}
+          </div>
+
+          {book.description && (
+            <p className="text-sm text-stone-600 leading-relaxed mb-8 max-w-prose">
+              {book.description}
+            </p>
+          )}
+
           <AmazonButton title={book.title} author={book.authors[0] ?? ''} affiliateUrl={affiliateUrl} />
         </div>
       </div>
+
       <SimilarBooks books={similar} />
     </>
   );

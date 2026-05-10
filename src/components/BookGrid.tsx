@@ -9,15 +9,15 @@ interface Props {
 export default function BookGrid({ books }: Props) {
   if (books.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400">
-        <p className="text-lg">Nenhum livro encontrado.</p>
-        <p className="text-sm mt-1">Tente outros termos ou remova alguns filtros.</p>
+      <div className="text-center py-20 text-stone-400">
+        <p className="text-sm">Nenhum livro encontrado.</p>
+        <p className="text-xs mt-1">Tente outros termos ou remova alguns filtros.</p>
       </div>
     );
   }
 
   return (
-    <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0">
+    <ol className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 list-none p-0 m-0">
       {books.map(book => (
         <li key={book.id}>
           <BookCard

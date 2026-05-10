@@ -30,28 +30,49 @@ function SearchResults() {
 
   return (
     <div>
-      <div className="mb-6"><SearchBar defaultValue={q} /></div>
+      <div className="mb-8">
+        <SearchBar defaultValue={q} />
+      </div>
+
       {q && (
-        <p className="text-sm text-gray-500 mb-6">
-          {loading ? 'Buscando...' : `${filtered.length} resultado(s) para "${q}"`}
+        <p className="text-xs text-stone-400 mb-8 text-center">
+          {loading
+            ? 'Buscando...'
+            : `${filtered.length} resultado${filtered.length !== 1 ? 's' : ''} para "${q}"`}
         </p>
       )}
-      <div className="flex gap-8">
-        <FilterSidebar filters={filters} onChange={setFilters} />
-        <div className="flex-1">
-          {loading
-            ? <div className="text-center py-16 text-gray-400">Carregando livros...</div>
-            : <BookGrid books={filtered} />
-          }
+
+      {!q && (
+        <div className="text-center py-24 text-stone-400">
+          <p className="text-sm">Digite algo para buscar livros.</p>
         </div>
-      </div>
+      )}
+
+      {q && (
+        <div className="flex gap-10">
+          <FilterSidebar filters={filters} onChange={setFilters} />
+          <div className="flex-1 min-w-0">
+            {loading ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="bg-stone-100 rounded-xl aspect-[2/3] animate-pulse" />
+                ))}
+              </div>
+            ) : (
+              <BookGrid books={filtered} />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default function BuscaPage() {
   return (
-    <Suspense fallback={<div className="text-center py-16 text-gray-400">Carregando...</div>}>
+    <Suspense fallback={
+      <div className="text-center py-24 text-stone-400 text-sm">Carregando...</div>
+    }>
       <SearchResults />
     </Suspense>
   );

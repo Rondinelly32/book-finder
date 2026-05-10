@@ -8,36 +8,43 @@ export const metadata: Metadata = {
   description: 'Terminou um livro e não sabe o que ler agora? Responda um questionário rápido e receba recomendações personalizadas em português para comprar na Amazon Brasil.',
 };
 
-const EMOJIS: Record<string, string> = {
-  suspense: '🔪', romance: '💕', ciencia: '🔬', fantasia: '🧙',
-  historia: '📜', autoajuda: '✨', biografia: '👤', 'ficcao-cientifica': '🚀',
-};
-
 export default function HomePage() {
   return (
     <div>
-      {/* Hero — indexable by Google */}
-      <div className="text-center py-12">
-        <h1 className="text-3xl font-bold mb-2">Qual livro você vai ler a seguir?</h1>
-        <p className="text-gray-500 text-sm max-w-md mx-auto">
-          Termine um livro e não sabe o que ler agora? Informe sua última leitura, responda algumas perguntas e receba recomendações personalizadas em português.
+      {/* Hero */}
+      <div className="text-center pt-8 pb-4 max-w-xl mx-auto">
+        <p className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-4">
+          Recomendações personalizadas
+        </p>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-stone-900 mb-4 text-balance leading-tight">
+          Qual livro você vai ler a seguir?
+        </h1>
+        <p className="text-stone-500 text-[15px] leading-relaxed">
+          Informe sua última leitura, responda algumas perguntas e descubra o próximo livro perfeito para você — em português.
         </p>
       </div>
 
-      {/* Interactive questionnaire — client component */}
+      {/* Interactive questionnaire */}
       <QuestionnaireClient />
 
-      {/* Category links — indexable by Google */}
-      <div className="mt-16 border-t border-gray-100 pt-10">
-        <p className="text-xs text-gray-400 uppercase tracking-wide mb-4 text-center">Explorar por categoria</p>
-        <div className="flex flex-wrap justify-center gap-3">
+      {/* Category grid — indexable by Google */}
+      <div className="mt-20 pt-12 border-t border-stone-100">
+        <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-widest mb-6 text-center">
+          Explorar por categoria
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {CATEGORIES.map(cat => (
             <Link
               key={cat}
               href={`/categoria/${cat}`}
-              className="flex items-center gap-1.5 border border-gray-200 rounded-full px-4 py-1.5 text-sm hover:border-blue-400 hover:text-blue-600 transition-colors"
+              className="group flex items-center gap-3 border border-stone-200 bg-white hover:border-stone-400 hover:bg-stone-50 rounded-xl px-4 py-3.5 transition-all"
             >
-              {EMOJIS[cat]} {CATEGORY_LABELS[cat]}
+              <span className="text-sm font-medium text-stone-700 group-hover:text-stone-900 transition-colors">
+                {CATEGORY_LABELS[cat]}
+              </span>
+              <svg className="w-3.5 h-3.5 text-stone-300 group-hover:text-stone-500 ml-auto transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
             </Link>
           ))}
         </div>

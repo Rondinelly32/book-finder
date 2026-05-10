@@ -98,6 +98,28 @@ export const CATEGORY_FAQS: Record<Category, Array<{ q: string; a: string }>> = 
   ],
 };
 
+export const CATEGORY_THEMES: Record<Category, string[]> = {
+  historia: ['Brasil', 'Segunda Guerra', 'Antiguidade', 'Império Romano', 'Revoluções', 'Guerras Mundiais'],
+  suspense: ['Policial', 'Thriller Psicológico', 'Espionagem', 'Crime', 'Serial Killer', 'Suspense Jurídico'],
+  romance: ['Contemporâneo', 'Histórico', 'Clássico', 'Jovem Adulto', 'Saga Familiar', 'Epistolar'],
+  fantasia: ['Epic Fantasy', 'Magia', 'Dragões', 'Urban Fantasy', 'Mitologia', 'Mundos Secundários'],
+  ciencia: ['Física', 'Biologia', 'Neurociência', 'Astronomia', 'Matemática', 'Evolução'],
+  autoajuda: ['Produtividade', 'Mentalidade', 'Finanças', 'Relacionamentos', 'Meditação', 'Liderança'],
+  biografia: ['Líderes', 'Artistas', 'Cientistas', 'Escritores', 'Políticos', 'Empresários'],
+  'ficcao-cientifica': ['Distopia', 'Space Opera', 'Cyberpunk', 'Pós-Apocalíptico', 'Inteligência Artificial', 'Viagem no Tempo'],
+};
+
+export const CATEGORY_HERO_COLOR: Record<Category, { from: string; to: string; label: string }> = {
+  historia:          { from: '#f5f0e8', to: '#e8dcc8', label: '#92400e' },
+  suspense:          { from: '#f1f1f0', to: '#e2e0dd', label: '#44403c' },
+  romance:           { from: '#fdf2f4', to: '#fce7eb', label: '#9f1239' },
+  fantasia:          { from: '#f3f0fc', to: '#ede9fe', label: '#5b21b6' },
+  ciencia:           { from: '#eff6ff', to: '#dbeafe', label: '#1e40af' },
+  autoajuda:         { from: '#f0fdf4', to: '#dcfce7', label: '#166534' },
+  biografia:         { from: '#fff7ed', to: '#fed7aa', label: '#9a3412' },
+  'ficcao-cientifica': { from: '#f0f4ff', to: '#dde5ff', label: '#312e81' },
+};
+
 export const CATEGORY_RELATED: Record<Category, Category[]> = {
   suspense: ['biografia', 'historia', 'ficcao-cientifica'],
   romance: ['autoajuda', 'biografia', 'historia'],

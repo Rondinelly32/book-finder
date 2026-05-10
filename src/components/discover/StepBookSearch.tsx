@@ -44,23 +44,35 @@ export default function StepBookSearch({ onSelect }: Props) {
 
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-xl font-semibold mb-1 text-center">Qual foi o último livro que você leu?</h2>
-      <p className="text-gray-500 text-sm text-center mb-6">
-        Opcional — ajuda a afinar as recomendações
+      <h2 className="text-xl font-semibold tracking-tight text-stone-900 text-center mb-1">
+        Qual foi o último livro que você leu?
+      </h2>
+      <p className="text-stone-500 text-sm text-center mb-7">
+        Opcional — ajuda a personalizar as recomendações
       </p>
 
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        placeholder="Digite o título ou autor..."
-        className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
-
-      {loading && <p className="text-xs text-gray-400 mt-2 text-center">Buscando...</p>}
+      <div className="relative">
+        <svg
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          type="text"
+          value={query}
+          onChange={handleChange}
+          placeholder="Título ou autor..."
+          className="w-full bg-white border border-stone-200 rounded-xl pl-10 pr-4 py-3 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-colors"
+          autoFocus
+        />
+        {loading && (
+          <div className="absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border-2 border-stone-300 border-t-stone-600 rounded-full animate-spin" />
+        )}
+      </div>
 
       {results.length > 0 && (
-        <ul className="mt-2 border border-gray-200 rounded-lg divide-y divide-gray-100 overflow-hidden">
+        <ul className="mt-1.5 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm divide-y divide-stone-100">
           {results.map(r => {
             const olKey = r.key.replace('/works/', '');
             return (
@@ -68,11 +80,11 @@ export default function StepBookSearch({ onSelect }: Props) {
                 <button
                   type="button"
                   onClick={() => onSelect({ olKey, title: r.title })}
-                  className="w-full text-left px-4 py-2.5 hover:bg-blue-50 transition-colors"
+                  className="w-full text-left px-4 py-3 hover:bg-stone-50 transition-colors"
                 >
-                  <p className="text-sm font-medium">{r.title}</p>
+                  <p className="text-sm font-medium text-stone-900">{r.title}</p>
                   {r.author_name?.[0] && (
-                    <p className="text-xs text-gray-400">{r.author_name[0]}</p>
+                    <p className="text-xs text-stone-400 mt-0.5">{r.author_name[0]}</p>
                   )}
                 </button>
               </li>
@@ -84,9 +96,9 @@ export default function StepBookSearch({ onSelect }: Props) {
       <button
         type="button"
         onClick={() => onSelect(null)}
-        className="mt-6 w-full text-sm text-gray-500 hover:text-blue-600 underline underline-offset-2"
+        className="mt-6 w-full text-sm text-stone-400 hover:text-stone-700 transition-colors py-2"
       >
-        Não sei, me ajude a descobrir
+        Não sei, me ajude a descobrir →
       </button>
     </div>
   );
