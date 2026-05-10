@@ -51,19 +51,40 @@ async function fetchEditionByIsbn(isbn: string): Promise<PtEdition | null> {
 
 /**
  * Fetch Portuguese edition data for a work.
- * Fast path: use PT/BR ISBN already known from search result.
- * Slow path: paginate editions.json.
+ * Fast path 1: use PT/BR ISBN already known from search result.
+ * Fast path 2: search Open Library for PT editions of this work by key.
+ * Slow path:   paginate editions.json up to 50.
  */
 async function fetchPtEdition(workKey: string, isbns: string[] = []): Promise<PtEdition | null> {
+  // Fast path 1: PT/BR ISBN already in search result
   const ptIsbn = findPtIsbn(isbns);
   if (ptIsbn) {
     const result = await fetchEditionByIsbn(ptIsbn).catch(() => null);
     if (result) return result;
   }
 
-  // Fallback: scan first editions page filtered by language=por (faster than fetching all 50)
+  // Fast path 2: search the OL index for PT editions of this specific work
   const key = workKey.replace('/works/', '');
-  const res = await fetch(`${BASE}/works/${key}/editions.json?limit=20`, {
+  const searchUrl = `${BASE}/search.json?q=key:"/works/${key}"&language=por&limit=1&fields=title,isbn,cover_i,number_of_pages_median,publisher`;
+  const searchRes = await fetch(searchUrl, { next: { revalidate: 3600 }, headers: HEADERS }).catch(() => null);
+  if (searchRes?.ok) {
+    const searchData = await searchRes.json().catch(() => null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const doc = searchData?.docs?.[0] as any;
+    if (doc?.title) {
+      const ptIsbnFromSearch = findPtIsbn(doc.isbn ?? []);
+      return {
+        title: doc.title,
+        coverId: doc.cover_i,
+        isbn: ptIsbnFromSearch,
+        pageCount: doc.number_of_pages_median ?? 0,
+        publisher: doc.publisher?.[0] ?? '',
+      };
+    }
+  }
+
+  // Slow path: scan first 50 editions for a Portuguese one
+  const res = await fetch(`${BASE}/works/${key}/editions.json?limit=50`, {
     next: { revalidate: 3600 },
     headers: HEADERS,
   });
