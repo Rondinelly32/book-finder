@@ -130,6 +130,25 @@ export async function searchOpenLibrary(query: string, maxResults = 20): Promise
   return docs.map((doc: any, i) => parseDoc(doc, ptEditions[i]));
 }
 
+const GENERIC_SUBJECTS = new Set([
+  'fiction', 'general', 'literature', 'american literature', 'english literature',
+  'large type books', 'new york times bestseller', 'accessible book',
+  'internet archive wishlist', 'in library', 'overdrive', 'protected daisy',
+  'fictitious character', 'open library staff picks',
+]);
+
+export async function getWorkSubjects(olKey: string): Promise<string[]> {
+  const res = await fetch(`${BASE}/works/${olKey}.json`, {
+    next: { revalidate: 86400 },
+    headers: HEADERS,
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return ((data.subjects ?? []) as string[])
+    .filter(s => !GENERIC_SUBJECTS.has(s.toLowerCase()) && !s.startsWith('nyt:') && s.length < 50)
+    .slice(0, 5);
+}
+
 export async function getOpenLibraryBook(olKey: string): Promise<Book | null> {
   // Fetch work data and ISBNs for this work in parallel
   const [workRes, isbnRes] = await Promise.all([

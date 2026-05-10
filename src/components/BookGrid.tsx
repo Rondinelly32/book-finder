@@ -17,14 +17,15 @@ export default function BookGrid({ books }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0">
       {books.map(book => (
-        <BookCard
-          key={book.id}
-          book={book}
-          affiliateUrl={buildAffiliateLink(book.title, book.authors[0] ?? '', book.isbn)}
-        />
+        <li key={book.id}>
+          <BookCard
+            book={book}
+            affiliateUrl={buildAffiliateLink(book.title, book.authors[0] ?? '', book.isbn)}
+          />
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }

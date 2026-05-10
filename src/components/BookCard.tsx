@@ -17,7 +17,13 @@ export default function BookCard({ book, affiliateUrl }: Props) {
       <Link href={`/livro/${book.id}/${slug}`} className="flex-1 p-3">
         <div className="relative w-full aspect-[2/3] bg-gray-100 mb-2 rounded overflow-hidden">
           {book.thumbnail ? (
-            <Image src={book.thumbnail} alt={book.title} fill className="object-cover" sizes="200px" />
+            <Image
+                  src={book.thumbnail}
+                  alt={`Capa do livro ${book.title}${book.authors[0] ? ` de ${book.authors[0]}` : ''}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-xs">Sem capa</div>
           )}
