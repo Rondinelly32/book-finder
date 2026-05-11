@@ -43,6 +43,7 @@ export const metadata: Metadata = {
   },
   description: 'Descubra o próximo livro que você vai amar. Recomendações personalizadas em português com compra na Amazon Brasil.',
   openGraph: { siteName: 'próximolivro', locale: 'pt_BR', type: 'website' },
+  verification: { google: 'eLYVzdB6A6xncRxF4PBUZxjvaMoWWkhH13W9CIAlolU' },
 };
 
 const NAV_LINKS = [
